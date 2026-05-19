@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="/images/myself.png" type="image/x-icon">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300&family=JetBrains+Mono:wght@400&display=swap"
+        rel="stylesheet">
+
+    <title>The Single Source of Truth in Parallel Systems — suzzit.dev</title>
+
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/hero.css">
+    <link rel="stylesheet" href="/styles/navbar.css">
+    <link rel="stylesheet" href="/styles/footer.css">
+
+    <style>
+        /* ── Blog-specific styles only ── */
+        :root {
+            --navy: #0C447C;
+            --sky: #B5D4F4;
+            --ice: #E6F1FB;
+            --dark: #1A1A1A;
+            --mid: #4A4A4A;
+            --muted: #8A8A8A;
+            --rule: #E0E0DC;
+            --pull-bg: #EEF5FC;
+            --good-bg: #EAF5F0;
+            --good: #1D9E75;
+            --warn-bg: #FEF9EC;
+            --warn: #BA7517;
+            --danger-bg: #FEF0EE;
+            --danger: #A32D2D;
+            --close-bg: #F5F5F3;
+            --coral: #D85A30;
+        }
+
+        body {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-weight: 300;
+            color: var(--dark);
+            background: #fafaf8;
+        }
+
+        /* Article layout */
+        .blog-article {
+            max-width: 740px;
+            margin: 0 auto;
+            padding: 6rem 1.5rem 4rem;
+        }
+
+        /* Kicker */
+        .blog-kicker {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+
+        .blog-kicker span {
+            opacity: 0.45;
+            margin: 0 6px;
+        }
+
+        /* Headline */
+        .blog-headline {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 2.9rem);
+            font-weight: 600;
+            line-height: 1.15;
+            color: var(--dark);
+            margin-bottom: 1.1rem;
+            letter-spacing: -0.01em;
+        }
+
+        /* Subhead */
+        .blog-subhead {
+            font-size: 1.15rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--mid);
+            line-height: 1.65;
+            border-left: 3px solid var(--navy);
+            padding-left: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Meta */
+        .blog-meta {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--muted);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            padding: 1rem 0;
+            border-top: 1px solid var(--rule);
+            border-bottom: 1px solid var(--rule);
+            margin-bottom: 2.5rem;
+        }
+
+        /* Body copy */
+        .blog-body p {
+            font-size: 1.08rem;
+            line-height: 1.85;
+            color: var(--dark);
+            margin-bottom: 1.25rem;
+        }
+
+        .blog-body strong {
+            font-weight: 600;
+        }
+
+        /* Section accent */
+        .section-accent {
+            width: 36px;
+            height: 3px;
+            background: var(--navy);
+            border-radius: 2px;
+            margin: 2rem 0;
+        }
+
+        /* H2 */
+        .blog-body h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.55rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin: 2.5rem 0 0.75rem;
+            line-height: 1.3;
+        }
+
+        /* H3 */
+        .blog-body h3 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: var(--navy);
+            margin: 2rem 0 0.6rem;
+        }
+
+        /* Pull quote */
+        .pull-quote {
+            background: var(--pull-bg);
+            border-left: 4px solid var(--navy);
+            border-radius: 0 8px 8px 0;
+            padding: 1.4rem 1.6rem;
+            margin: 2rem 0;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.15rem;
+            color: var(--navy);
+            line-height: 1.7;
+        }
+
+        /* Diagram boxes */
+        .diagram-wrap {
+            background: #f4f4f2;
+            border: 1px solid var(--rule);
+            border-radius: 10px;
+            padding: 1.4rem;
+            margin: 1.5rem 0;
+        }
+
+        .diagram-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 1rem;
+        }
+
+        /* Split-brain problem diagram */
+        .prob-nodes {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .prob-node {
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            border-radius: 8px;
+            padding: 0.9rem 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            line-height: 1.6;
+        }
+
+        .prob-node.normal {
+            background: var(--ice);
+            border: 1px solid var(--sky);
+            color: var(--navy);
+        }
+
+        .prob-node.conflict {
+            background: var(--danger-bg);
+            border: 2px solid var(--coral);
+            color: var(--coral);
+        }
+
+        .prob-node strong {
+            display: block;
+            font-size: 1rem;
+            margin-top: 2px;
+        }
+
+        .prob-caption {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--muted);
+            text-align: center;
+            margin-top: 0.75rem;
+            font-style: italic;
+        }
+
+        /* SSOT architecture diagram */
+        .ssot-arch {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+        }
+
+        .ssot-source-node {
+            background: var(--ice);
+            border: 2px solid var(--navy);
+            border-radius: 8px;
+            padding: 0.75rem 2.2rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--navy);
+            font-weight: 600;
+            letter-spacing: 0.04em;
+        }
+
+        .ssot-arrow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 2px 0;
+        }
+
+        .ssot-arrow-line {
+            width: 2px;
+            height: 24px;
+            background: #b0b0b0;
+        }
+
+        .ssot-arrow-head {
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 8px solid #b0b0b0;
+        }
+
+        .ssot-consumers {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .ssot-consumer {
+            background: white;
+            border: 1px solid var(--rule);
+            border-radius: 7px;
+            padding: 0.6rem 0.85rem;
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            color: var(--mid);
+            min-width: 100px;
+        }
+
+        .ssot-consumer em {
+            display: block;
+            font-style: normal;
+            font-size: 0.65rem;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        /* Pattern grid */
+        .pattern-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin: 1.25rem 0;
+        }
+
+        .pattern-card {
+            background: white;
+            border: 1px solid var(--rule);
+            border-top: 3px solid var(--navy);
+            border-radius: 8px;
+            padding: 1rem 1.1rem;
+        }
+
+        .pattern-card .p-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.4rem;
+        }
+
+        .pattern-card .p-desc {
+            font-family: 'Source Serif 4', serif;
+            font-size: 0.88rem;
+            color: var(--mid);
+            line-height: 1.55;
+            font-weight: 300;
+        }
+
+        /* Consistency table */
+        .cons-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+            margin: 1rem 0;
+        }
+
+        .cons-table th {
+            background: #f0f0ee;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--muted);
+            padding: 0.6rem 0.9rem;
+            text-align: left;
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .cons-table td {
+            padding: 0.7rem 0.9rem;
+            border-bottom: 1px solid var(--rule);
+            vertical-align: middle;
+            color: var(--dark);
+            font-family: 'Source Serif 4', serif;
+            font-weight: 300;
+        }
+
+        .cons-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .badge-lat {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 999px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .badge-high {
+            background: var(--danger-bg);
+            color: var(--danger);
+        }
+
+        .badge-medium {
+            background: var(--warn-bg);
+            color: var(--warn);
+        }
+
+        .badge-low {
+            background: var(--good-bg);
+            color: var(--good);
+        }
+
+        /* Checklist */
+        .checklist-box {
+            background: #f8f8f7;
+            border: 1px solid var(--rule);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1.25rem 0;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 0.85rem 1.1rem;
+            border-bottom: 1px solid var(--rule);
+            font-family: 'Source Serif 4', serif;
+            font-size: 0.98rem;
+            color: var(--dark);
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .checklist-item:last-child {
+            border-bottom: none;
+        }
+
+        .check-icon {
+            flex-shrink: 0;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--good-bg);
+            border: 1.5px solid var(--good);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2px;
+        }
+
+        .check-icon svg {
+            width: 11px;
+            height: 11px;
+            stroke: var(--good);
+            stroke-width: 2.5;
+            fill: none;
+        }
+
+        /* Closing box */
+        .closing-box {
+            background: var(--close-bg);
+            border: 1px solid var(--rule);
+            border-top: 3px solid var(--navy);
+            border-radius: 10px;
+            padding: 1.6rem 1.75rem;
+            margin-top: 2.5rem;
+        }
+
+        .closing-box h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            color: var(--dark);
+        }
+
+        .closing-box p {
+            font-size: 1rem;
+            color: var(--mid);
+            line-height: 1.75;
+            margin: 0;
+        }
+
+        /* Footer override for blog page spacing */
+        footer {
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 576px) {
+            .blog-article {
+                padding: 5rem 1rem 3rem;
+            }
+
+            .blog-headline {
+                font-size: 1.75rem;
+            }
+
+            .pattern-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .ssot-consumers {
+                gap: 6px;
+            }
+
+            .cons-table {
+                font-size: 0.8rem;
+            }
+
+            .cons-table th,
+            .cons-table td {
+                padding: 0.5rem 0.6rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">
+                <img src="/images/myself.png" height="40" width="40" loading="lazy">suzzit.dev
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://blog.sujeetb.com.np">Blogs</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- ═══════════════ BLOG CONTENT ═══════════════ -->
+    <article class="blog-article">
+
+        <!-- Kicker -->
+        <p class="blog-kicker">System Design <span>·</span> Distributed Systems</p>
+
+        <!-- Headline -->
+        <h1 class="blog-headline">The Single Source of Truth<br>in Parallel Systems</h1>
+
+        <!-- Subhead -->
+        <p class="blog-subhead">
+            When multiple services write to the same data concurrently, the question
+            isn't who is fastest — it's who gets to be right.
+        </p>
+
+        <!-- Meta -->
+        <div class="blog-meta">
+            <span>8 min read</span>
+            <span>SSOT</span>
+            <span>Concurrency</span>
+            <span>Event Sourcing</span>
+            <span>May 2026</span>
+        </div>
+
+        <!-- Body -->
+        <div class="blog-body">
+
+            <p>
+                Parallelism is one of the great gifts of modern distributed systems. Spin up ten
+                workers, crunch ten times the data — in theory. In practice, parallel operations
+                that share mutable state produce a special kind of chaos: race conditions,
+                split-brain scenarios, and the most insidious bug of all, a system that looks
+                consistent from the outside while quietly lying to everyone.
+            </p>
+            <p>
+                The <strong>Single Source of Truth (SSOT)</strong> pattern is the antidote. It is the
+                architectural discipline of designating exactly one authoritative location for each
+                piece of state, and routing every read and write through that location. In the context
+                of parallel operations, it transforms an inherently competitive problem — many writers,
+                one truth — into a tractable engineering challenge.
+            </p>
+
+            <div class="section-accent"></div>
+
+            <!-- Section 1 -->
+            <h2>Why parallel systems drift apart</h2>
+            <p>
+                Imagine a distributed inventory system. Three services are reconciling stock counts
+                in parallel: an e-commerce checkout, a warehouse management system, and a returns
+                processor. Each has a local view of the item count. Each updates its view concurrently.
+                Without a single authority, you get conflicting realities:
+            </p>
+
+            <!-- Problem diagram -->
+            <div class="diagram-wrap">
+                <div class="diagram-label">Problem: distributed state, no authority</div>
+                <div class="prob-nodes">
+                    <div class="prob-node normal">Checkout<strong>qty: 4</strong></div>
+                    <div class="prob-node conflict">Warehouse<strong>qty: 2</strong></div>
+                    <div class="prob-node normal">Returns<strong>qty: 5</strong></div>
+                </div>
+                <p class="prob-caption">Three services — three conflicting realities. No way to know which is right.</p>
+            </div>
+
+            <p>
+                This is the split-brain problem. Each node believes its version is correct.
+                Reconciling them requires either a painful merge strategy or an authoritative
+                tiebreaker. SSOT is the architectural decision to declare that tiebreaker upfront,
+                before any conflict happens.
+            </p>
+
+            <div class="pull-quote">
+                "A system with two sources of truth has no source of truth."
+            </div>
+
+            <!-- Section 2 -->
+            <h2>What SSOT actually means</h2>
+            <p>
+                The term is often used loosely. In the context of parallel system design, it has a
+                precise meaning: <em>one canonical store owns each logical entity, and every other
+                    representation is a derived projection of it.</em> Parallel consumers may hold local
+                copies for performance, but those copies are always subordinate — caches, not authorities.
+            </p>
+
+            <!-- SSOT Architecture diagram -->
+            <div class="diagram-wrap">
+                <div class="diagram-label">SSOT architecture: one authority, many consumers</div>
+                <div class="ssot-arch">
+                    <div class="ssot-source-node">⬡ &nbsp; Authoritative Store — the SSOT</div>
+                    <div class="ssot-arrow">
+                        <div class="ssot-arrow-line"></div>
+                        <div class="ssot-arrow-head"></div>
+                    </div>
+                    <div class="ssot-consumers">
+                        <div class="ssot-consumer">Service A<em>read replica</em></div>
+                        <div class="ssot-consumer">Service B<em>event consumer</em></div>
+                        <div class="ssot-consumer">Analytics<em>read projection</em></div>
+                        <div class="ssot-consumer">Cache<em>evicted on write</em></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-accent"></div>
+
+            <!-- Section 3 -->
+            <h2>Core patterns for enforcing SSOT in parallel workloads</h2>
+            <p>
+                There is no single implementation. The right pattern depends on your consistency
+                requirements, latency budget, and failure model. Here are four approaches that work
+                in practice:
+            </p>
+
+            <div class="pattern-grid">
+                <div class="pattern-card">
+                    <div class="p-name">Optimistic Locking</div>
+                    <div class="p-desc">Attach a version number to each record. Writers include the expected version;
+                        the store rejects stale writes. Workers retry on conflict.</div>
+                </div>
+                <div class="pattern-card">
+                    <div class="p-name">Event Sourcing</div>
+                    <div class="p-desc">The event log is the SSOT. State is never stored directly — it's computed by
+                        replaying the immutable append-only log.</div>
+                </div>
+                <div class="pattern-card">
+                    <div class="p-name">Serializable Queues</div>
+                    <div class="p-desc">Route all writes through an ordered queue. Workers consume sequentially,
+                        preserving causal order without distributed locks.</div>
+                </div>
+                <div class="pattern-card">
+                    <div class="p-name">CQRS</div>
+                    <div class="p-desc">Separate the write model (commands → SSOT) from read models (projections).
+                        Parallel reads never contend with writes.</div>
+                </div>
+            </div>
+
+            <h3>Optimistic locking in detail</h3>
+            <p>
+                Optimistic locking is the simplest entry point. Each row carries a <code>version</code>
+                integer. A parallel worker reads the row — say, version 7 — does its computation, then
+                issues an update conditional on the version still being 7. The database enforces atomicity.
+                If another worker committed in the meantime, the version is now 8, the update fails with
+                zero rows affected, and the worker retries with fresh data. No distributed coordination required.
+            </p>
+            <p>
+                This works well when write conflicts are rare. When they are frequent — think hot-row
+                contention on a shared counter — the retry storm can be worse than pessimistic locking.
+                In those cases, consider partitioning the state so each parallel worker owns a disjoint
+                shard, then merging results afterward.
+            </p>
+
+            <h3>Event sourcing as the ultimate SSOT</h3>
+            <p>
+                Event sourcing takes the idea further: the event log itself is the source of truth,
+                not a derived state table. When multiple parallel workers emit events, the log captures
+                them in order. Current state is always a fold over the log. This means no write ever
+                destroys information — replaying from any checkpoint rebuilds the authoritative state.
+            </p>
+            <p>
+                Parallel consumers can build their own read projections independently without any of
+                them being "right" or "wrong" — they are all derived views of the same canonical log.
+                The tradeoff is read latency and operational complexity. For systems that require full
+                audit trails — financial ledgers, inventory, compliance workflows — the tradeoff is
+                usually worth it.
+            </p>
+
+            <div class="section-accent"></div>
+
+            <!-- Section 4: Consistency Spectrum -->
+            <h2>The consistency spectrum</h2>
+            <p>
+                Not all systems can afford strong consistency. The SSOT principle does not require it.
+                What it requires is that you are <em>explicit</em> about your consistency model, not
+                accidental about it.
+            </p>
+
+            <table class="cons-table">
+                <thead>
+                    <tr>
+                        <th>Model</th>
+                        <th>What parallel workers see</th>
+                        <th>Latency</th>
+                        <th>Suitable for</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Linearizable</strong></td>
+                        <td>All writes globally ordered, immediately visible</td>
+                        <td><span class="badge-lat badge-high">High</span></td>
+                        <td>Financial transactions, inventory</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Serializable</strong></td>
+                        <td>Transactions appear to execute one at a time</td>
+                        <td><span class="badge-lat badge-medium">Medium</span></td>
+                        <td>Booking systems, reservations</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Eventual</strong></td>
+                        <td>Writes propagate asynchronously; stale reads possible</td>
+                        <td><span class="badge-lat badge-low">Low</span></td>
+                        <td>Social feeds, analytics, search indexes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Causal</strong></td>
+                        <td>Causally related writes seen in order; others may vary</td>
+                        <td><span class="badge-lat badge-low">Low–Med</span></td>
+                        <td>Collaborative editing, chat systems</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>
+                The critical point: every row in that table is compatible with SSOT. Even eventual
+                consistency has a canonical store — it's just that reads may lag. The SSOT defines
+                where truth lives; the consistency model defines how quickly that truth propagates
+                to parallel consumers.
+            </p>
+
+            <div class="section-accent"></div>
+
+            <!-- Section 5: Failure modes -->
+            <h2>Common failure modes to design against</h2>
+
+            <p>
+                Even well-intentioned teams drift from SSOT over time. Watch for these:
+            </p>
+            <p>
+                <strong>Dual-write without atomicity.</strong> A service writes to a database and
+                publishes an event to a message bus in two separate operations. If the service crashes
+                between the two, the bus and database diverge. Fix: use the transactional outbox pattern
+                — write the event as a row in the same database transaction, then relay it asynchronously.
+            </p>
+            <p>
+                <strong>Cache that becomes the authority.</strong> A Redis cache is populated from the
+                database. Then, under load, teams start writing to the cache directly because it's faster.
+                The database is now stale, the cache is now the de facto SSOT, but it has no durability
+                guarantee. Fix: never write to a cache that isn't backed by a write-through or
+                write-around strategy tied to the authoritative store.
+            </p>
+            <p>
+                <strong>Microservice ownership creep.</strong> Service A owns the user entity. Service B
+                needs a user field, so it stores a copy. Now both services own different fields of the same
+                entity. Fix: establish clear domain ownership and expose data through APIs or events, never
+                through direct shared tables.
+            </p>
+
+            <div class="pull-quote">
+                Caches lie. Replicas lag. Event projections estimate. Only the SSOT is right — and only if you protect
+                it.
+            </div>
+
+            <!-- Section 6: Checklist -->
+            <h2>Practical checklist for a parallel system</h2>
+            <p>Before shipping a parallel workload, run through these questions:</p>
+
+            <div class="checklist-box">
+                <div class="checklist-item">
+                    <div class="check-icon">
+                        <svg viewBox="0 0 12 12">
+                            <polyline points="2,6 5,9 10,3" />
+                        </svg>
+                    </div>
+                    Is there exactly one store that owns each entity? Is it documented?
+                </div>
+                <div class="checklist-item">
+                    <div class="check-icon">
+                        <svg viewBox="0 0 12 12">
+                            <polyline points="2,6 5,9 10,3" />
+                        </svg>
+                    </div>
+                    Do all writes go through the authoritative store before being projected elsewhere?
+                </div>
+                <div class="checklist-item">
+                    <div class="check-icon">
+                        <svg viewBox="0 0 12 12">
+                            <polyline points="2,6 5,9 10,3" />
+                        </svg>
+                    </div>
+                    Have you chosen an explicit consistency model and designed retry/conflict logic around it?
+                </div>
+                <div class="checklist-item">
+                    <div class="check-icon">
+                        <svg viewBox="0 0 12 12">
+                            <polyline points="2,6 5,9 10,3" />
+                        </svg>
+                    </div>
+                    Are cross-service writes atomic or protected by the transactional outbox pattern?
+                </div>
+                <div class="checklist-item">
+                    <div class="check-icon">
+                        <svg viewBox="0 0 12 12">
+                            <polyline points="2,6 5,9 10,3" />
+                        </svg>
+                    </div>
+                    Is there an observable way to detect and alert when a derived store diverges from the SSOT?
+                </div>
+            </div>
+
+            <!-- Closing -->
+            <div class="closing-box">
+                <h4>The bottom line</h4>
+                <p>
+                    Parallel execution is a performance strategy. SSOT is a correctness strategy. They are
+                    not in conflict — the fastest parallel systems in production are the ones that invested
+                    early in a clear authority model, because they spend zero cycles resolving contradictions
+                    that should never have existed. Decide where truth lives, enforce it architecturally, and
+                    let your workers run as fast as they want.
+                </p>
+            </div>
+
+        </div><!-- /blog-body -->
+    </article>
+    <!-- ═══════════════ END BLOG CONTENT ═══════════════ -->
+
+
+    <footer class="text-center">
+        <p class="mb-0">© 2026 suzzit</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
