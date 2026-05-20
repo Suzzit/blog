@@ -12,347 +12,1071 @@
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300&family=JetBrains+Mono:wght@400&display=swap"
         rel="stylesheet">
 
-    <title>Backend path — suzzit.dev</title>
+    <title>Backend/Platform Engineering Roadmap — suzzit.dev</title>
 
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="stylesheet" href="/styles/hero.css">
     <link rel="stylesheet" href="/styles/navbar.css">
     <link rel="stylesheet" href="/styles/footer.css">
+
+    <style>
+        :root {
+            --navy: #0C447C;
+            --sky: #B5D4F4;
+            --ice: #E6F1FB;
+            --dark: #1A1A1A;
+            --mid: #4A4A4A;
+            --muted: #8A8A8A;
+            --rule: #E0E0DC;
+            --pull-bg: #EEF5FC;
+            --good-bg: #EAF5F0;
+            --good: #1D9E75;
+            --warn-bg: #FEF9EC;
+            --warn: #BA7517;
+            --close-bg: #F5F5F3;
+            --tag-bg: #F0F4F8;
+        }
+
+        body {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-weight: 300;
+            color: var(--dark);
+            background: #fafaf8;
+        }
+
+        .blog-article {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 6rem 1.5rem 4rem;
+        }
+
+        /* Kicker */
+        .blog-kicker {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+
+        .blog-kicker span {
+            opacity: 0.4;
+            margin: 0 6px;
+        }
+
+        /* Headline */
+        .blog-headline {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 2.85rem);
+            font-weight: 600;
+            line-height: 1.15;
+            color: var(--dark);
+            margin-bottom: 1.1rem;
+            letter-spacing: -0.01em;
+        }
+
+        /* Subhead */
+        .blog-subhead {
+            font-size: 1.12rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--mid);
+            line-height: 1.65;
+            border-left: 3px solid var(--navy);
+            padding-left: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Meta */
+        .blog-meta {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--muted);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            padding: 1rem 0;
+            border-top: 1px solid var(--rule);
+            border-bottom: 1px solid var(--rule);
+            margin-bottom: 2.5rem;
+        }
+
+        /* Body */
+        .blog-body p {
+            font-size: 1.06rem;
+            line-height: 1.85;
+            color: var(--dark);
+            margin-bottom: 1.2rem;
+        }
+
+        .blog-body strong {
+            font-weight: 600;
+        }
+
+        /* Section accent */
+        .section-accent {
+            width: 36px;
+            height: 3px;
+            background: var(--navy);
+            border-radius: 2px;
+            margin: 2rem 0;
+        }
+
+        /* H2 */
+        .blog-body h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin: 2.5rem 0 0.75rem;
+            line-height: 1.3;
+        }
+
+        /* H3 */
+        .blog-body h3 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.76rem;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: var(--navy);
+            margin: 1.75rem 0 0.5rem;
+        }
+
+        /* Pull quote */
+        .pull-quote {
+            background: var(--pull-bg);
+            border-left: 4px solid var(--navy);
+            border-radius: 0 8px 8px 0;
+            padding: 1.3rem 1.5rem;
+            margin: 2rem 0;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.12rem;
+            color: var(--navy);
+            line-height: 1.7;
+        }
+
+        /* ── Phase card ── */
+        .phase-card {
+            border: 1px solid var(--rule);
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 1.75rem 0;
+            background: white;
+        }
+
+        .phase-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.1rem 1.4rem;
+            background: var(--ice);
+            border-bottom: 1px solid var(--sky);
+        }
+
+        .phase-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            color: white;
+            background: var(--navy);
+            border-radius: 6px;
+            padding: 3px 9px;
+            white-space: nowrap;
+        }
+
+        .phase-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--navy);
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        .phase-duration {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            color: var(--muted);
+            margin-left: auto;
+            white-space: nowrap;
+        }
+
+        .phase-body {
+            padding: 1.2rem 1.4rem;
+        }
+
+        .phase-body p {
+            font-size: 0.98rem;
+            color: var(--mid);
+            line-height: 1.75;
+            margin-bottom: 0.9rem;
+        }
+
+        /* Topic tags */
+        .tag-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin: 0.6rem 0 1rem;
+        }
+
+        .tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            background: var(--tag-bg);
+            color: var(--navy);
+            border: 1px solid var(--sky);
+            border-radius: 5px;
+            padding: 3px 10px;
+        }
+
+        .tag.highlight {
+            background: var(--ice);
+            font-weight: 600;
+        }
+
+        /* Resource links */
+        .resource-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 0.5rem 0 0.75rem;
+        }
+
+        .resource-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            color: var(--navy);
+            text-decoration: none;
+            border: 1px solid var(--sky);
+            border-radius: 5px;
+            padding: 3px 10px;
+            background: white;
+            transition: background 0.15s;
+        }
+
+        .resource-link:hover {
+            background: var(--ice);
+            color: var(--navy);
+        }
+
+        /* Inline label */
+        .inline-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 6px;
+            margin-top: 12px;
+        }
+
+        /* Build box */
+        .build-box {
+            background: var(--good-bg);
+            border: 1px solid #b2dece;
+            border-left: 3px solid var(--good);
+            border-radius: 0 7px 7px 0;
+            padding: 0.9rem 1.1rem;
+            margin: 0.75rem 0 0;
+        }
+
+        .build-box p {
+            font-size: 0.9rem !important;
+            color: #1A4A3A !important;
+            margin-bottom: 0.4rem !important;
+        }
+
+        .build-box p:last-child {
+            margin-bottom: 0 !important;
+        }
+
+        /* Warning box */
+        .warn-box {
+            background: var(--warn-bg);
+            border: 1px solid #f2d28a;
+            border-left: 3px solid var(--warn);
+            border-radius: 0 7px 7px 0;
+            padding: 0.9rem 1.1rem;
+            margin: 0.75rem 0;
+        }
+
+        .warn-box p {
+            font-size: 0.9rem !important;
+            color: #5C3A00 !important;
+            margin-bottom: 0.4rem !important;
+        }
+
+        .warn-box p:last-child {
+            margin-bottom: 0 !important;
+        }
+
+        /* Mindset shift block */
+        .mindset-block {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 0;
+            align-items: center;
+            border: 1px solid var(--rule);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1.25rem 0;
+            background: white;
+        }
+
+        .mindset-from,
+        .mindset-to {
+            padding: 1.3rem 1.4rem;
+        }
+
+        .mindset-from {
+            background: #fdf5f5;
+        }
+
+        .mindset-to {
+            background: var(--good-bg);
+        }
+
+        .mindset-arrow {
+            padding: 1rem 0.75rem;
+            font-size: 1.4rem;
+            color: var(--muted);
+            text-align: center;
+            border-left: 1px solid var(--rule);
+            border-right: 1px solid var(--rule);
+            background: white;
+        }
+
+        .mindset-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 6px;
+        }
+
+        .mindset-text {
+            font-family: 'Source Serif 4', serif;
+            font-size: 0.92rem;
+            color: var(--dark);
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        /* Portfolio project cards */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin: 1.25rem 0;
+        }
+
+        .project-card {
+            border: 1px solid var(--rule);
+            border-top: 3px solid var(--navy);
+            border-radius: 8px;
+            padding: 1.1rem 1.1rem;
+            background: white;
+        }
+
+        .project-card .proj-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-card .proj-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .project-card .proj-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            background: var(--tag-bg);
+            color: var(--mid);
+            border-radius: 4px;
+            padding: 2px 7px;
+        }
+
+        /* Stack table */
+        .stack-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            margin: 1.25rem 0;
+        }
+
+        .stack-group {
+            border: 1px solid var(--rule);
+            border-radius: 8px;
+            overflow: hidden;
+            background: white;
+        }
+
+        .stack-group-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: white;
+            background: var(--navy);
+            padding: 5px 10px;
+        }
+
+        .stack-items {
+            padding: 8px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .stack-item {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--mid);
+        }
+
+        /* Avoid list */
+        .avoid-list {
+            background: #fdf5f5;
+            border: 1px solid #f5c8c0;
+            border-left: 3px solid #C0392B;
+            border-radius: 0 8px 8px 0;
+            padding: 1rem 1.2rem;
+            margin: 1rem 0;
+        }
+
+        .avoid-list .avoid-item {
+            font-family: 'Source Serif 4', serif;
+            font-size: 0.98rem;
+            color: #5C1A1A;
+            line-height: 1.7;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .avoid-list .avoid-item::before {
+            content: "✕";
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: #C0392B;
+            margin-top: 4px;
+            flex-shrink: 0;
+        }
+
+        /* Closing box */
+        .closing-box {
+            background: var(--close-bg);
+            border: 1px solid var(--rule);
+            border-top: 3px solid var(--navy);
+            border-radius: 10px;
+            padding: 1.6rem 1.75rem;
+            margin-top: 2.5rem;
+        }
+
+        .closing-box h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            color: var(--dark);
+        }
+
+        .closing-box p {
+            font-size: 1rem;
+            color: var(--mid);
+            line-height: 1.75;
+            margin: 0;
+        }
+
+        footer {
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 576px) {
+            .blog-article {
+                padding: 5rem 1rem 3rem;
+            }
+
+            .blog-headline {
+                font-size: 1.75rem;
+            }
+
+            .mindset-block {
+                grid-template-columns: 1fr;
+            }
+
+            .mindset-arrow {
+                border: none;
+                border-top: 1px solid var(--rule);
+                border-bottom: 1px solid var(--rule);
+                padding: 0.5rem;
+            }
+
+            .phase-duration {
+                display: none;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-    Recommended Backend/Platform Engineering Roadmap
-    Phase 1 — Modern Python Backend Engineering (1–2 months)
-
-    Move from Flask-style app development to production backend engineering.
-
-    Learn deeply
-    async Python
-    FastAPI
-    pydantic
-    background jobs
-    API architecture
-    dependency injection
-    testing
-
-    Focus on:
-
-    clean architecture
-    service layers
-    repository patterns
-    API versioning
-    structured logging
-
-    Resources:
-
-    FastAPI
-    Pydantic
-    Build
-
-    A backend service with:
-
-    JWT auth
-    RBAC
-    rate limiting
-    Redis caching
-    PostgreSQL
-    async tasks
-    Docker
-    Phase 2 — Become Excellent at Databases (1–2 months)
-
-    This separates average backend devs from strong ones.
-
-    PostgreSQL topics to master
-    indexes
-    EXPLAIN ANALYZE
-    query planning
-    transactions
-    isolation levels
-    deadlocks
-    partitioning
-    replication basics
-    connection pooling
-
-    Resources:
-
-    PostgreSQL Documentation
-    EXPLAIN Visualizer
-    Learn:
-
-    Why queries become slow at scale.
-
-    That understanding compounds for your whole career.
-
-    Phase 3 — Redis + Messaging Systems (1 month)
-
-    Critical for platform/backend engineering.
-
-    Learn Redis properly
-
-    Not just caching.
-
-    Understand:
-
-    pub/sub
-    distributed locks
-    queues
-    rate limiting
-    streams
-    TTL strategies
-
-    Resources:
-
-    Redis Docs
-
-    Then move to message brokers:
-
-    RabbitMQ first
-    then Kafka basics
-
-    Resources:
-
-    RabbitMQ Tutorials
-    Apache Kafka Documentation
-    Important concepts
-    eventual consistency
-    retries
-    idempotency
-    backpressure
-    consumer groups
-    dead letter queues
-
-    These are core platform engineering skills.
-
-    Phase 4 — Linux + Networking (1 month)
-
-    Many backend developers stay weak here.
-
-    You should know:
-
-    Linux processes
-    memory
-    file descriptors
-    networking basics
-    DNS
-    TCP/IP
-    HTTP internals
-    TLS
-    reverse proxies
-
-    Resources:
-
-    The Linux Documentation Project
-    NGINX Docs
-
-    Learn to:
-
-    debug servers
-    inspect logs
-    monitor ports
-    trace requests
-
-    This makes you dramatically more effective in production environments.
-
-    Phase 5 — Docker + Infrastructure (1–2 months)
-
-    You should become extremely comfortable with containers.
-
-    Learn
-    Dockerfiles
-    image layers
-    networking
-    volumes
-    compose
-    multi-stage builds
-
-    Resources:
-
-    Docker Docs
-
-    Then:
-
-    Kubernetes fundamentals
-    orchestration concepts
-    scaling
-    service discovery
-
-    Resources:
-
-    Kubernetes Documentation
-
-    You do NOT need to become a Kubernetes admin immediately.
-
-    You DO need to understand:
-
-    pods
-    deployments
-    services
-    ingress
-    config maps
-    secrets
-    Phase 6 — Cloud Engineering (2 months)
-
-    Prioritize:
-
-    AWS
-
-    Learn:
-
-    EC2
-    RDS
-    S3
-    IAM
-    VPC basics
-    CloudWatch
-    load balancers
-
-    Resources:
-
-    AWS Documentation
-
-    After basics:
-
-    Terraform
-    infrastructure as code
-
-    Resources:
-
-    Terraform Docs
-    Phase 7 — Observability & Reliability
-
-    This is where platform engineers become senior-level.
-
-    Learn:
-
-    metrics
-    tracing
-    centralized logging
-    uptime monitoring
-    alerting
-
-    Tools:
-
-    Prometheus
-    Grafana
-    OpenTelemetry
-
-    Resources:
-
-    Prometheus Docs
-    Grafana Docs
-    OpenTelemetry Docs
-
-    Understand:
-
-    latency
-    throughput
-    saturation
-    error rates
-
-    These are platform engineering fundamentals.
-
-    Most Important Skill: Systems Thinking
-
-    The biggest transition is:
-
-    From:
-
-    “How do I write this feature?”
-
-    To:
-
-    “How does this system behave under load, failure, scaling, retries, and deployment?”
-
-    That mindset shift matters more than any framework.
-
-    Suggested Portfolio Projects
-    Project 1 — Scalable API Service
-
-    Features:
-
-    FastAPI
-    Postgres
-    Redis
-    Docker
-    background jobs
-    JWT auth
-    metrics
-    CI/CD
-    Project 2 — Event-Driven System
-
-    Example:
-
-    order processing pipeline
-    notifications service
-    queue workers
-    retries
-    dead letter queues
-
-    Use:
-
-    RabbitMQ or Kafka
-    Project 3 — Mini Platform Infrastructure
-
-    Build:
-
-    Kubernetes deployment
-    nginx ingress
-    autoscaling
-    monitoring
-    Terraform provisioning
-
-    This project alone teaches massive amounts.
-
-    What NOT to do
-
-    Avoid spending months on:
-
-    endless LeetCode only
-    tutorial hell
-    framework hopping
-    over-optimizing frontend skills
-
-    Your leverage now is:
-
-    distributed systems
-    reliability
-    infrastructure
-    performance
-    backend architecture
-    Strong Tech Stack for You
-
-    Given your current skills, this is an excellent target stack:
-
-    Core
-    Python
-    FastAPI
-    PostgreSQL
-    Redis
-    Infra
-    Docker
-    nginx
-    Linux
-    GitHub Actions
-    Messaging
-    RabbitMQ
-    Kafka basics
-    Cloud
-    AWS
-    Terraform
-    Observability
-    Prometheus
-    Grafana
-    Orchestration
-    Kubernetes basics
-
-    That combination is extremely employable for:
-
-    startups
-    SaaS companies
-    remote backend roles
-    infrastructure teams
-    platform engineering tracks
-
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">
+                <img src="/images/myself.png" height="40" width="40" loading="lazy">suzzit.dev
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://blog.sujeetb.com.np">Blogs</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- ═══════════════ BLOG CONTENT ═══════════════ -->
+    <article class="blog-article">
+
+        <p class="blog-kicker">Career <span>·</span> Backend Engineering <span>·</span> Roadmap</p>
+
+        <h1 class="blog-headline">Recommended Backend &amp;<br>Platform Engineering Roadmap</h1>
+
+        <p class="blog-subhead">
+            A practical, phase-by-phase path from Flask-style development to production
+            platform engineering — covering everything from async Python to Kubernetes, observability, and systems
+            thinking.
+        </p>
+
+        <div class="blog-meta">
+            <span>15 min read</span>
+            <span>7 Phases</span>
+            <span>Python · PostgreSQL · Docker · Kubernetes · AWS</span>
+            <span>May 2026</span>
+        </div>
+
+        <div class="blog-body">
+
+            <p>
+                Most backend developers plateau early. They learn a framework, build CRUD apps, and stop.
+                The jump from writing features to engineering systems — systems that hold up under load,
+                failure, scaling, and deployment — requires deliberate progression across a wider set of
+                disciplines. This roadmap lays out that progression, phase by phase.
+            </p>
+
+            <div class="section-accent"></div>
+
+            <!-- Phase 1 -->
+            <div class="phase-card">
+                <div class="phase-header">
+                    <span class="phase-number">PHASE 01</span>
+                    <h2 class="phase-title">Modern Python Backend Engineering</h2>
+                    <span class="phase-duration">1–2 months</span>
+                </div>
+                <div class="phase-body">
+                    <p>Move from Flask-style app development to production backend engineering. The goal isn't to learn
+                        a new framework — it's to change how you think about structuring backend code.</p>
+
+                    <div class="inline-label">Learn deeply</div>
+                    <div class="tag-group">
+                        <span class="tag highlight">async Python</span>
+                        <span class="tag highlight">FastAPI</span>
+                        <span class="tag highlight">Pydantic</span>
+                        <span class="tag">background jobs</span>
+                        <span class="tag">API architecture</span>
+                        <span class="tag">dependency injection</span>
+                        <span class="tag">testing</span>
+                    </div>
+
+                    <div class="inline-label">Focus on patterns</div>
+                    <div class="tag-group">
+                        <span class="tag">clean architecture</span>
+                        <span class="tag">service layers</span>
+                        <span class="tag">repository patterns</span>
+                        <span class="tag">API versioning</span>
+                        <span class="tag">structured logging</span>
+                    </div>
+
+                    <div class="inline-label">Resources</div>
+                    <div class="resource-row">
+                        <a class="resource-link" href="https://fastapi.tiangolo.com" target="_blank"
+                            rel="noopener">FastAPI Docs</a>
+                        <a class="resource-link" href="https://docs.pydantic.dev" target="_blank"
+                            rel="noopener">Pydantic Docs</a>
+                    </div>
+
+                    <div class="build-box">
+                        <p><strong>Build:</strong> A backend service with JWT auth, RBAC, rate limiting, Redis caching,
+                            PostgreSQL, async tasks, and Docker.</p>
+                        <p>Ship it. Don't just follow a tutorial.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 2 -->
+            <div class="phase-card">
+                <div class="phase-header">
+                    <span class="phase-number">PHASE 02</span>
+                    <h2 class="phase-title">Become Excellent at Databases</h2>
+                    <span class="phase-duration">1–2 months</span>
+                </div>
+                <div class="phase-body">
+                    <p>This is what separates average backend developers from strong ones. Everyone uses a database.
+                        Very few understand what happens inside it under load.</p>
+
+                    <div class="inline-label">PostgreSQL topics to master</div>
+                    <div class="tag-group">
+                        <span class="tag highlight">indexes</span>
+                        <span class="tag highlight">EXPLAIN ANALYZE</span>
+                        <span class="tag highlight">query planning</span>
+                        <span class="tag highlight">transactions</span>
+                        <span class="tag">isolation levels</span>
+                        <span class="tag">deadlocks</span>
+                        <span class="tag">partitioning</span>
+                        <span class="tag">replication basics</span>
+                        <span class="tag">connection pooling</span>
+                    </div>
+
+                    <div class="inline-label">Resources</div>
+                    <div class="resource-row">
+                        <a class="resource-link" href="https://www.postgresql.org/docs/" target="_blank"
+                            rel="noopener">PostgreSQL Docs</a>
+                        <a class="resource-link" href="https://explain.dalibo.com" target="_blank"
+                            rel="noopener">EXPLAIN Visualizer</a>
+                    </div>
+
+                    <div class="warn-box">
+                        <p><strong>Learn:</strong> Why queries become slow at scale. That understanding compounds across
+                            your entire career.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 3 -->
+            <div class="phase-card">
+                <div class="phase-header">
+                    <span class="phase-number">PHASE 03</span>
+                    <h2 class="phase-title">Redis + Messaging Systems</h2>
+                    <span class="phase-duration">1 month</span>
+                </div>
+                <div class="phase-body">
+                    <p>Redis is not just a cache. Messaging brokers are not just queues. Understanding both properly is
+                        critical for platform and backend engineering at any meaningful scale.</p>
+
+                    <div class="inline-label">Learn Redis properly — understand</div>
+                    <div class="tag-group">
+                        <span class="tag highlight">pub/sub</span>
+                        <span class="tag highlight">distributed locks</span>
+                        <span class="tag">queues</span>
+                        <span class="tag">rate limiting</span>
+                        <span class="tag">streams</span>
+                        <span class="tag">TTL strategies</span>
+                    </div>
+
+                    <div class="inline-label">Resources</div>
+                    <div class="resource-row">
+                        <a class="resource-link" href="https://redis.io/docs" target="_blank" rel="noopener">Redis
+                            Docs</a>
+                    </div>
+
+                    <div class="inline-label">Then move to message brokers</div>
+                    <div class="tag-group">
+                        <span class="tag highlight">RabbitMQ</span>
+                        <span class="tag">Kafka basics</span>
+                    </div>
+
+                    <div class="inline-label">Resources</div>
+                    <div class="resource-row">
+                        <a class="resource-link" href="https://www.rabbitmq.com/tutorials" target="_blank"
+                            rel="noopener">RabbitMQ Tutorials</a>
+                        <a class="resource-link" href="https://kafka.apache.org/documentation/" target="_blank"
+                            rel="noopener">Apache Kafka Docs</a>
+                    </div>
+
+                    <div class="inline-label">Core concepts</div>
+                    <div class="tag-group">
+                        <span class="tag highlight">eventual consistency</span>
+                        <span class="tag highlight">idempotency</span>
+                        <span class="tag">retries</span>
+                        <span class="tag">backpressure</span>
+                        <span class="tag">consumer groups</span>
+                        <span class="tag">dead letter queues</span>
+                    </div>
+
+                    <p style="margin-top: 0.75rem;">These are core platform engineering skills. Employers hiring for
+                        backend infrastructure expect you to know them cold.</p>
+                </div>
+            </div>
+
+            <!-- Phase 4 -->
+            <div class="phase-card">
+                <div class="phase-header">
+                    <span class="phase-number">PHASE 04</span>
+                    <h2 class="phase-title">Linux + Networking</h2>
+                    <span class="phase-duration">1 month</span>
+                </div>
+                <div class="phase-body">
+                    <p>Many backend developers stay weak here and it shows in production. You don't need to be a
+                        sysadmin — but you do need to be comfortable at the command line when things break.</p>
+
+                    <div class="inline-label">You should know</div>
+                    <div class="tag-group">
+                        <span class="tag highlight">Linux processes</span>
+                        <span class="tag highlight">file descriptors</span>
+                        <span class="tag">memory management</span>
+                        <span class="tag highlight">DNS</span>
+                        <span class="tag highlight">TCP/IP</span>
+                        <span class="tag highlight">HTTP internals</span>
+                        <span class="tag">TLS</span>
+                        <span class="tag">reverse proxies</span>
+                    </div>
+
+                    <div class="inline-label">Resources</div>
+                    <div class="resource-row">
+                        <a class="resource-link" href="https://www.tldp.org" target="_blank" rel="noopener">Linux
+                            Documentation Project</a>
+                        <a class="resource-link" href="https://nginx.org/en/docs/" target="_blank" rel="noopener">NGINX
+                            Docs</a>
+                    </div>
+
+                    <div class="build-box">
+                        <p><strong>Practice:</strong> Debug servers, inspect logs, monitor ports, and trace requests in
+                            a live environment.</p>
+                        <p>This makes you dramatically more effective whenever something breaks in production — which it
+                            will.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 5 -->
+            <div class="phase-card">
+                <div class="phase-header">
+                    <span class="phase-number">PHASE 05</span>
+                    <h2 class="phase-title">Docker + Infrastructure</h2>
+                    <span class="phase-duration">1–2 months</span>
+                </div>
+                <div class="phase-body">
+                    <p>Containers are not optional anymore. You should become extremely comfortable with them — not just
+                        enough to run a tutorial project, but enough to reason about what's happening inside.</p>
+
+                    <div class="inline-label">Learn</div>
+                    <div class="tag-group">
+                        <span class="tag highlight">Dockerfiles</span>
+                        <span class="tag highlight">image layers</span>
+                        <span class="tag">networking</span>
+                        <span class="tag">volumes</span>
+                        <span class="tag highlight">Docker Compose</span>
+                        <span class="tag">multi-stage builds</span>
+                    </div>
+
+                    <div class="inline-label">Resources</div>
+                    <div class="resource-row">
+                        <a class="resource-link" href="https://docs.docker.com" target="_blank" rel="noopener">Docker
+                            Docs</a>
+                    </div>
+
+                    <div class="inline-label">Then: Kubernetes fundamentals</div>
+                    <div class="tag-group">
+                        <span class="tag highlight">pods</span>
+                        <span class="tag highlight">deployments</span>
+                        <span class="tag">services</span>
+                        <span class="tag">ingress</span>
+                        <span class="tag">configmaps</span>
+                        <span class="tag">secrets</span>
+                        <span class="tag">autoscaling</span>
+                        <span class="tag">service discovery</span>
+                    </div>
+
+                    <div class="inline-label">Resources</div>
+                    <div class="resource-row">
+                        <a class="resource-link" href="https://kubernetes.io/docs/home/" target="_blank"
+                            rel="noopener">Kubernetes Docs</a>
+                    </div>
+
+                    <div class="warn-box">
+                        <p>You do <strong>NOT</strong> need to become a Kubernetes admin immediately.</p>
+                        <p>You <strong>DO</strong> need to understand what pods, deployments, services, and ingress
+                            actually mean — and how your code runs inside them.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 6 -->
+            <div class="phase-card">
+                <div class="phase-header">
+                    <span class="phase-number">PHASE 06</span>
+                    <h2 class="phase-title">Cloud Engineering</h2>
+                    <span class="phase-duration">2 months</span>
+                </div>
+                <div class="phase-body">
+                    <p>Pick one cloud provider and go deep. AWS has the largest market share and the most open job
+                        postings — start there.</p>
+
+                    <div class="inline-label">AWS — learn these services</div>
+                    <div class="tag-group">
+                        <span class="tag highlight">EC2</span>
+                        <span class="tag highlight">RDS</span>
+                        <span class="tag highlight">S3</span>
+                        <span class="tag highlight">IAM</span>
+                        <span class="tag">VPC basics</span>
+                        <span class="tag">CloudWatch</span>
+                        <span class="tag">load balancers</span>
+                    </div>
+
+                    <div class="inline-label">Resources</div>
+                    <div class="resource-row">
+                        <a class="resource-link" href="https://docs.aws.amazon.com" target="_blank" rel="noopener">AWS
+                            Documentation</a>
+                    </div>
+
+                    <div class="inline-label">After basics — Infrastructure as Code</div>
+                    <div class="tag-group">
+                        <span class="tag highlight">Terraform</span>
+                    </div>
+
+                    <div class="resource-row">
+                        <a class="resource-link" href="https://developer.hashicorp.com/terraform/docs" target="_blank"
+                            rel="noopener">Terraform Docs</a>
+                    </div>
+
+                    <p>If you can provision infrastructure with code, review it in pull requests, and tear it down
+                        cleanly — you're operating at a different level than most backend developers.</p>
+                </div>
+            </div>
+
+            <!-- Phase 7 -->
+            <div class="phase-card">
+                <div class="phase-header">
+                    <span class="phase-number">PHASE 07</span>
+                    <h2 class="phase-title">Observability &amp; Reliability</h2>
+                    <span class="phase-duration">Ongoing</span>
+                </div>
+                <div class="phase-body">
+                    <p>This is where platform engineers become senior-level. You can't improve what you can't see.
+                        Observability is how you see.</p>
+
+                    <div class="inline-label">Learn</div>
+                    <div class="tag-group">
+                        <span class="tag highlight">metrics</span>
+                        <span class="tag highlight">distributed tracing</span>
+                        <span class="tag highlight">centralized logging</span>
+                        <span class="tag">uptime monitoring</span>
+                        <span class="tag">alerting</span>
+                    </div>
+
+                    <div class="inline-label">Tools</div>
+                    <div class="tag-group">
+                        <span class="tag highlight">Prometheus</span>
+                        <span class="tag highlight">Grafana</span>
+                        <span class="tag highlight">OpenTelemetry</span>
+                    </div>
+
+                    <div class="inline-label">Resources</div>
+                    <div class="resource-row">
+                        <a class="resource-link" href="https://prometheus.io/docs/introduction/overview/"
+                            target="_blank" rel="noopener">Prometheus Docs</a>
+                        <a class="resource-link" href="https://grafana.com/docs/" target="_blank" rel="noopener">Grafana
+                            Docs</a>
+                        <a class="resource-link" href="https://opentelemetry.io/docs/" target="_blank"
+                            rel="noopener">OpenTelemetry Docs</a>
+                    </div>
+
+                    <div class="inline-label">Understand these four signals</div>
+                    <div class="tag-group">
+                        <span class="tag highlight">latency</span>
+                        <span class="tag highlight">throughput</span>
+                        <span class="tag highlight">saturation</span>
+                        <span class="tag highlight">error rates</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-accent"></div>
+
+            <!-- Mindset -->
+            <h2>The Most Important Skill: Systems Thinking</h2>
+            <p>No framework, tool, or certification matters as much as this mindset shift. It's what separates a
+                developer who writes features from an engineer who builds systems.</p>
+
+            <div class="mindset-block">
+                <div class="mindset-from">
+                    <div class="mindset-label">From</div>
+                    <div class="mindset-text">"How do I write this feature?"</div>
+                </div>
+                <div class="mindset-arrow">→</div>
+                <div class="mindset-to">
+                    <div class="mindset-label">To</div>
+                    <div class="mindset-text">"How does this system behave under load, failure, scaling, retries, and
+                        deployment?"</div>
+                </div>
+            </div>
+
+            <div class="pull-quote">
+                That mindset shift matters more than any framework. Engineer for the system, not just the feature.
+            </div>
+
+            <div class="section-accent"></div>
+
+            <!-- Portfolio -->
+            <h2>Suggested Portfolio Projects</h2>
+            <p>Don't just study. Build things that prove you can engineer, not just code. These three projects cover the
+                full stack of what platform engineers actually do.</p>
+
+            <div class="project-grid">
+                <div class="project-card">
+                    <div class="proj-name">01 — Scalable API Service</div>
+                    <div class="proj-tags">
+                        <span class="proj-tag">FastAPI</span>
+                        <span class="proj-tag">PostgreSQL</span>
+                        <span class="proj-tag">Redis</span>
+                        <span class="proj-tag">Docker</span>
+                        <span class="proj-tag">JWT auth</span>
+                        <span class="proj-tag">background jobs</span>
+                        <span class="proj-tag">metrics</span>
+                        <span class="proj-tag">CI/CD</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="proj-name">02 — Event-Driven System</div>
+                    <div class="proj-tags">
+                        <span class="proj-tag">RabbitMQ / Kafka</span>
+                        <span class="proj-tag">order pipeline</span>
+                        <span class="proj-tag">queue workers</span>
+                        <span class="proj-tag">retries</span>
+                        <span class="proj-tag">dead letter queues</span>
+                        <span class="proj-tag">notifications</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="proj-name">03 — Mini Platform Infra</div>
+                    <div class="proj-tags">
+                        <span class="proj-tag">Kubernetes</span>
+                        <span class="proj-tag">nginx ingress</span>
+                        <span class="proj-tag">autoscaling</span>
+                        <span class="proj-tag">Prometheus</span>
+                        <span class="proj-tag">Grafana</span>
+                        <span class="proj-tag">Terraform</span>
+                    </div>
+                </div>
+            </div>
+
+            <p>Project 3 alone teaches a massive amount. If you can provision, deploy, scale, and monitor a service
+                end-to-end — you're ready for most platform engineering roles.</p>
+
+            <div class="section-accent"></div>
+
+            <!-- What NOT to do -->
+            <h2>What NOT to Do</h2>
+            <p>Time is finite. Avoid spending months on things that won't move the needle for backend and platform
+                engineering.</p>
+
+            <div class="avoid-list">
+                <div class="avoid-item">Endless LeetCode without building real systems</div>
+                <div class="avoid-item">Tutorial hell — watching without building</div>
+                <div class="avoid-item">Framework hopping before mastering fundamentals</div>
+                <div class="avoid-item">Over-optimizing frontend skills when your goal is backend</div>
+            </div>
+
+            <p>Your leverage is in distributed systems, reliability, infrastructure, performance, and backend
+                architecture. That's where the reps should go.</p>
+
+            <div class="section-accent"></div>
+
+            <!-- Stack -->
+            <h2>Strong Target Tech Stack</h2>
+            <p>Given a Python background, this is an excellent and highly employable combination for startups, SaaS
+                companies, remote backend roles, and platform engineering tracks.</p>
+
+            <div class="stack-grid">
+                <div class="stack-group">
+                    <div class="stack-group-title">Core</div>
+                    <div class="stack-items">
+                        <span class="stack-item">Python</span>
+                        <span class="stack-item">FastAPI</span>
+                        <span class="stack-item">PostgreSQL</span>
+                        <span class="stack-item">Redis</span>
+                    </div>
+                </div>
+                <div class="stack-group">
+                    <div class="stack-group-title">Infra</div>
+                    <div class="stack-items">
+                        <span class="stack-item">Docker</span>
+                        <span class="stack-item">nginx</span>
+                        <span class="stack-item">Linux</span>
+                        <span class="stack-item">GitHub Actions</span>
+                    </div>
+                </div>
+                <div class="stack-group">
+                    <div class="stack-group-title">Messaging</div>
+                    <div class="stack-items">
+                        <span class="stack-item">RabbitMQ</span>
+                        <span class="stack-item">Kafka basics</span>
+                    </div>
+                </div>
+                <div class="stack-group">
+                    <div class="stack-group-title">Cloud</div>
+                    <div class="stack-items">
+                        <span class="stack-item">AWS</span>
+                        <span class="stack-item">Terraform</span>
+                    </div>
+                </div>
+                <div class="stack-group">
+                    <div class="stack-group-title">Observability</div>
+                    <div class="stack-items">
+                        <span class="stack-item">Prometheus</span>
+                        <span class="stack-item">Grafana</span>
+                        <span class="stack-item">OpenTelemetry</span>
+                    </div>
+                </div>
+                <div class="stack-group">
+                    <div class="stack-group-title">Orchestration</div>
+                    <div class="stack-items">
+                        <span class="stack-item">Kubernetes basics</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Closing -->
+            <div class="closing-box">
+                <h4>Final thought</h4>
+                <p>
+                    This roadmap covers roughly 8–12 months of deliberate work. The phases build on each other — don't
+                    rush to cloud engineering before your database fundamentals are solid.
+                    The engineers who get hired and promoted aren't the ones who know the most frameworks. They're the
+                    ones who can reason about systems under pressure.
+                    Start Phase 1. Build the project. Move forward.
+                </p>
+            </div>
+
+        </div><!-- /blog-body -->
+    </article>
+    <!-- ═══════════════ END BLOG CONTENT ═══════════════ -->
+
+
+    <footer class="text-center">
+        <p class="mb-0">© 2026 suzzit</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
